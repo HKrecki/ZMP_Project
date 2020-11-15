@@ -12,21 +12,33 @@
  * \file
  * \brief Definicja klasy Interp4Move
  *
- * Plik zawiera definicję klasy Interp4Move ...
+ * Plik zawiera definicję klasy Interp4Move, odpowiedzialnej za zamodelowanie
+ * ruchu pojedynczego robota.
  */
 
 /*!
  * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego ruch do przodu
  *
- *  Klasa modeluje ...
+ *  Klasa modeluje hotyzontalny ruch robota w linii prostej.
  */
 class Interp4Move: public Interp4Command {
-  /*
-   *  Tu należy zdefiniować pola, które są niezbędne
-   *  do przechowywania wartości parametrów danego polecenia.
-   *  Ponieżej zdefiniowane jest tylko jedno pole jako przykład.
+  // TODO: Dodać opis zmiannych
+
+  /*!
+   * \brief Nadana predkosc
    */
   double  _Speed_mmS;
+
+  /*!
+   * \brief Dlugosc przebytej drogi
+   */
+  double  _Length_mm;
+
+  /*!
+   * \brief Nazwa obiektu
+   */
+  std::string  _name;
+  
  public:
   /*!
    * \brief

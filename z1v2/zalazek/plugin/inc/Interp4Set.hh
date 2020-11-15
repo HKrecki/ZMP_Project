@@ -1,5 +1,5 @@
-#ifndef  COMMAND4MOVE_HH
-#define  COMMAND4MOVE_HH
+#ifndef  COMMAND4SET_HH
+#define  COMMAND4SET_HH
 
 #ifndef __GNUG__
 # pragma interface
@@ -10,28 +10,45 @@
 
 /*!
  * \file
- * \brief Definicja klasy Interp4Move
+ * \brief Definicja klasy Interp4Set
  *
- * Plik zawiera definicję klasy Interp4Move ...
+ * Plik zawiera definicję klasy Interp4Move i funkcji skladowych. Całość jest
+ * opdpowiedzialna za wstępne ustwaienie obiektu na scenie.
  */
 
 /*!
- * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego ruch do przodu
+ * \brief Modeluje polecenie dla robota mobilnego, które inicjalizuje położenie
+ * obiektu na scenie.
  *
- *  Klasa modeluje ...
+ *  Klasa modeluje ustawienie obiektu na scenie
  */
-class Interp4Move: public Interp4Command {
-  /*
-   *  Tu należy zdefiniować pola, które są niezbędne
-   *  do przechowywania wartości parametrów danego polecenia.
-   *  Ponieżej zdefiniowane jest tylko jedno pole jako przykład.
+class Interp4Set: public Interp4Command {
+
+  /*!
+   * \brief Nazwa obiektu
    */
-  double  _Speed_mmS;
+  std::string _name;
+
+  /*!
+   * \brief Położenie na scenie we współrzędej X
+   */
+  double _wsp_x;
+
+  /*!
+   * \brief Położenie na scenie we współrzędnej Y
+   */
+  double _wsp_y;
+
+  /*!
+   * \brief Kąt obrotu w okół osi Z
+   */
+  double _kat_OZ;
+  
  public:
   /*!
    * \brief
    */
-  Interp4Move();  
+  Interp4Set();  
   /*!
    * \brief Wyświetla postać bieżącego polecenia (nazwę oraz wartości parametrów)
    */

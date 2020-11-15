@@ -42,8 +42,6 @@ bool ExecActions(istream &rIStrm, Interp4Command &rInterp){
 
     cout << "Parametry: " << endl;
     rInterp.PrintCmd();
-    
-    
   }
 
   /*
