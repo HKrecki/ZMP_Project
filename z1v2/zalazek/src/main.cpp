@@ -76,29 +76,28 @@ int main(int argc, char** argv)
   }
 
   cout << endl << IStrm.str() << endl;
-	    
+
+  // Handlers
   void *pLibHnd_Move = dlopen("libInterp4Move.so",RTLD_LAZY);
   void *pLibHnd_Set = dlopen("libInterp4Set.so", RTLD_LAZY);
+  void *pLibHnd_Pause = dlopen("libInterp4Pause.so", RTLD_LAZY);
+  void *pLibHnd_Rotate = dlopen("libInterp4Rotate.so", RTLD_LAZY);
+  
     
   Interp4Command *(*pCreateCmd_Move)(void);
   Interp4Command *(*pCreateCmd_Set)(void);
+  Interp4Command *(*pCreateCmd_Pause)(void);
+  Interp4Command *(*pCreateCmd_Rotate)(void);
   
   void *pFun;
   void *pFunS;
 
-  if (!pLibHnd_Move) {
-    cerr << "!!! Brak biblioteki: Interp4Move.so" << endl;
+  if (!pLibHnd_Move || !pLibHnd_Set || !pLibHnd_Pause || !pLibHnd_Rotate) {
+    cerr << "!!! Brak biblioteki !!!" << endl;
     return 1;
   }
-
-  if (!pLibHnd_Set) {
-    cerr << "!!! Brak biblioteki: Interp4Set.so" << endl;
-    return 1;
-  }
-
 
   
-
   pFun = dlsym(pLibHnd_Move,"CreateCmd");
   if (!pFun) {
     cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
