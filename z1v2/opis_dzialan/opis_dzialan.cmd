@@ -2,4 +2,4 @@
 /*
  *  Przykładowy zestaw poleceń
  */
-  Move  Ob_B 10 90
+  Set  Ob_B 10 90 100

@@ -1,5 +1,5 @@
-#ifndef  COMMAND4MOVE_HH
-#define  COMMAND4MOVE_HH
+#ifndef  COMMAND4ROTATE_HH
+#define  COMMAND4ROTATE_HH
 
 #ifndef __GNUG__
 # pragma interface
@@ -20,18 +20,27 @@
  *
  *  Klasa modeluje ...
  */
-class Interp4Move: public Interp4Command {
-  /*
-   *  Tu należy zdefiniować pola, które są niezbędne
-   *  do przechowywania wartości parametrów danego polecenia.
-   *  Ponieżej zdefiniowane jest tylko jedno pole jako przykład.
-   */
-  double  _Speed_mmS;
+class Interp4Rotate: public Interp4Command {
+  /*!
+   * \brief Nazwa obiektu
+  */
+  std::string nazwa_obiektu;
+
+  /*!
+   * \brief Szybkosc kątowa w stopniach na sekundę
+  */
+  double szybkosc_katowa;
+
+  /*!
+   * \brief Kąt obrotu obiektu w stopniach
+  */
+  double kat_obrotu;
+  
  public:
   /*!
    * \brief
    */
-  Interp4Move();  
+  Interp4Rotate();  
   /*!
    * \brief Wyświetla postać bieżącego polecenia (nazwę oraz wartości parametrów)
    */

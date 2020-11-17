@@ -22,8 +22,6 @@
  *  Klasa modeluje hotyzontalny ruch robota w linii prostej.
  */
 class Interp4Move: public Interp4Command {
-  // TODO: Dodać opis zmiannych
-
   /*!
    * \brief Nadana predkosc
    */
