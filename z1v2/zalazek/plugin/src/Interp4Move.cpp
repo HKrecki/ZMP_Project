@@ -33,7 +33,7 @@ Interp4Move::Interp4Move(): _name("obj"), _Speed_mmS(0), _Length_mm(0)
 
 
 /*!
- * \brief Wyświetla składnię poleceniamover, kolejno: nazwa obiektu,
+ * \brief Wyświetla składnię polecenia move, kolejno: nazwa obiektu,
  * prędkość, długość drogi
  */
 void Interp4Move::PrintCmd() const
@@ -77,7 +77,7 @@ bool Interp4Move::ReadParams(std::istream& Strm_CmdsList)
 
 
 /*!
- *
+ * \brief Utworzenie nowego polecenia
  */
 Interp4Command* Interp4Move::CreateCmd()
 {
@@ -86,7 +86,7 @@ Interp4Command* Interp4Move::CreateCmd()
 
 
 /*!
- *
+ * \brief Wyświetlenie składni
  */
 void Interp4Move::PrintSyntax() const
 {

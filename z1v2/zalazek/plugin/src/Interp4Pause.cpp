@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Interp4Move.hh"
+#include "Interp4Pause.hh"
 #include "MobileObj.hh"
 
 using std::cout;
@@ -8,7 +8,7 @@ using std::endl;
 
 extern "C" {
  Interp4Command* CreateCmd(void);
-  const char* GetCmdName() { return "Move"; }
+  const char* GetCmdName() { return "Pause"; }
 }
 
 
@@ -21,42 +21,42 @@ extern "C" {
  */
 Interp4Command* CreateCmd(void)
 {
-  return Interp4Move::CreateCmd();
+  return Interp4Pause::CreateCmd();
 }
 
 
 /*!
- *
+ * \brief Konstruktor domyślny
  */
-Interp4Move::Interp4Move(): _Speed_mmS(0)
+Interp4Pause::Interp4Pause(): _Czas_pauzy_ms(0)
 {}
 
 
 /*!
- *
+ * \brief Wyświetla składnię polecenia Pause, w tym czas zatrzymania symulacji
  */
-void Interp4Move::PrintCmd() const
+void Interp4Pause::PrintCmd() const
 {
   /*
    *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
    */
-  cout << GetCmdName() << " " << _Speed_mmS  << " 10  2" << endl;
+  cout << GetCmdName() << _Czas_pauzy_ms<< endl;
 }
 
 
 /*!
- *
+ * \brief Funkcja zwraca nazwę komendy
  */
-const char* Interp4Move::GetCmdName() const
+const char* Interp4Pause::GetCmdName() const
 {
   return ::GetCmdName();
 }
 
 
 /*!
- *
+ * \brief Wykonanie polecenia
  */
-bool Interp4Move::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
+bool Interp4Pause::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
 {
   /*
    *  Tu trzeba napisać odpowiedni kod.
@@ -66,30 +66,31 @@ bool Interp4Move::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
 
 
 /*!
- *
+ * \brief Odczytanie zadanych parametrów z komendy(czas wstrzymania)
  */
-bool Interp4Move::ReadParams(std::istream& Strm_CmdsList)
+bool Interp4Pause::ReadParams(std::istream& Strm_CmdsList)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
-  return true;
+  Strm_CmdsList >> _Czas_pauzy_ms;
+  
+  return (!Strm_CmdsList.fail());
+
+  
 }
 
 
 /*!
- *
+ * \brief Utworzenie nowego polecenia
  */
-Interp4Command* Interp4Move::CreateCmd()
+Interp4Command* Interp4Pause::CreateCmd()
 {
-  return new Interp4Move();
+  return new Interp4Pause();
 }
 
 
 /*!
- *
+ * \brief Wyświetlenie składni
  */
-void Interp4Move::PrintSyntax() const
+void Interp4Pause::PrintSyntax() const
 {
-  cout << "   Move  NazwaObiektu  Szybkosc[m/s]  DlugoscDrogi[m]" << endl;
+  cout << "   Pause    Czas wstrzymania symulacji[ms]" << endl;
 }
