@@ -12,7 +12,7 @@
  * \file
  * \brief Definicja klasy Interp4Set
  *
- * Plik zawiera definicję klasy Interp4Move i funkcji skladowych. Całość jest
+ * Plik zawiera definicję klasy Interp4Set i funkcji skladowych. Całość jest
  * opdpowiedzialna za wstępne ustwaienie obiektu na scenie.
  */
 
@@ -46,7 +46,7 @@ class Interp4Set: public Interp4Command {
   
  public:
   /*!
-   * \brief
+   * \brief Konstruktor Interp4Set
    */
   Interp4Set();  
   /*!

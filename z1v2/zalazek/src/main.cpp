@@ -10,6 +10,7 @@
 
 using namespace std;
 
+/************************************************************************/
 
 bool ExecProcessor( const char *NazwaPliku, istringstream &IStrm4Cmds ){
   string Cmd4Preproc = "cpp -P ";
@@ -30,34 +31,28 @@ bool ExecProcessor( const char *NazwaPliku, istringstream &IStrm4Cmds ){
   return pclose(pProc) == 0;
 }
 
-/**********/
+/************************************************************************/
 
 bool ExecActions(istream &rIStrm, Interp4Command &rInterp){
   string CmdKey;
 
   rIStrm >> CmdKey;
 
-  if(CmdKey == "Move"){
+  if(CmdKey == "Move" || CmdKey == "Set" || CmdKey == "Rotate"
+     || CmdKey == "Pause")
+  {
     if(!rInterp.ReadParams(rIStrm)) return false;
 
     cout << "Parametry: " << endl;
     rInterp.PrintCmd();
   }
-
-  /*
-  cout << "Polecenie: " << CmdKey << " "  << endl;
-  
-  cout << endl;
-  rInterp.PrintSyntax();
-  cout << endl;
-  */
   
   return true;
 }
 
 
-/**********/
 
+/************************************************************************/
 
 
 
@@ -83,14 +78,26 @@ int main(int argc, char** argv)
   cout << endl << IStrm.str() << endl;
 	    
   void *pLibHnd_Move = dlopen("libInterp4Move.so",RTLD_LAZY);
+  void *pLibHnd_Set = dlopen("libInterp4Set.so", RTLD_LAZY);
+    
   Interp4Command *(*pCreateCmd_Move)(void);
+  Interp4Command *(*pCreateCmd_Set)(void);
+  
   void *pFun;
+  void *pFunS;
 
   if (!pLibHnd_Move) {
     cerr << "!!! Brak biblioteki: Interp4Move.so" << endl;
     return 1;
   }
 
+  if (!pLibHnd_Set) {
+    cerr << "!!! Brak biblioteki: Interp4Set.so" << endl;
+    return 1;
+  }
+
+
+  
 
   pFun = dlsym(pLibHnd_Move,"CreateCmd");
   if (!pFun) {
@@ -99,30 +106,20 @@ int main(int argc, char** argv)
   }
   pCreateCmd_Move = *reinterpret_cast<Interp4Command* (**)(void)>(&pFun);
 
+  pFunS = dlsym(pLibHnd_Set,"CreateCmd");
+  if (!pFunS) {
+    cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
+    return 1;
+  }
+  pCreateCmd_Set = *reinterpret_cast<Interp4Command* (**)(void)>(&pFunS);
 
-  Interp4Command *pInterp = pCreateCmd_Move();
+
+  // Interp4Command *pInterp = pCreateCmd_Move();
+  Interp4Command *pInterp = pCreateCmd_Set();
 
   if(!ExecActions(IStrm, *pInterp)){
     cerr << "Something wrong" << endl;
     return 3;
 
   }
-
-  
-
-  
-  /*
-  cout << endl;
-  cout << pCmd->GetCmdName() << endl;
-  cout << endl;
-  pCmd->PrintSyntax();
-  cout << endl;
-  pCmd->PrintCmd();
-  cout << endl;
-  
-  delete pCmd;
-
-  dlclose(pLibHnd_Move);
-  */
-  
 }

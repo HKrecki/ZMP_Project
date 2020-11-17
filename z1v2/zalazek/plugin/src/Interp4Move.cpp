@@ -15,7 +15,7 @@ extern "C" {
 
 
 /*!
- * \brief 
+ * \brief Utworzenie polecenia
  * 
  *
  */
@@ -26,28 +26,25 @@ Interp4Command* CreateCmd(void)
 
 
 /*!
- *
+ * \brief Konstruktor domyślny
  */
 Interp4Move::Interp4Move(): _name("obj"), _Speed_mmS(0), _Length_mm(0)
 {}
 
 
 /*!
- * \brief Wyświetla składnię polecenia
+ * \brief Wyświetla składnię poleceniamover, kolejno: nazwa obiektu,
+ * prędkość, długość drogi
  */
 void Interp4Move::PrintCmd() const
 {
-  /*
-   *  Wyswietla kolejno: nazwa polacenia, nazwa obiektu, predkosc obiektu,
-   *  dlugosc drogi obiektu
-   */
   cout << GetCmdName() << " " << _name << " " << _Speed_mmS << " "
        << _Length_mm  << endl;
 }
 
 
 /*!
- *
+ * \brief Funkcja zwraca nazwę komendy
  */
 const char* Interp4Move::GetCmdName() const
 {
@@ -56,7 +53,7 @@ const char* Interp4Move::GetCmdName() const
 
 
 /*!
- *
+ * \brief Wykonanie polecenia
  */
 bool Interp4Move::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
 {
@@ -68,7 +65,8 @@ bool Interp4Move::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
 
 
 /*!
- *
+ *   \brief Odczytanie zadanych parametrów z komendy(nazwa, predkosc, 
+ * dlugosc drogi)
  */
 bool Interp4Move::ReadParams(std::istream& Strm_CmdsList)
 {

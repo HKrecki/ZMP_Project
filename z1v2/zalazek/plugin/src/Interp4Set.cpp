@@ -15,7 +15,7 @@ extern "C" {
 
 
 /*!
- * \brief
+ * \brief Utworzenie polecenia
  *
  *
  */
@@ -26,27 +26,25 @@ Interp4Command* CreateCmd(void)
 
 
 /*!
- *
+ * \brief Konstruktor domyślny
  */
 Interp4Set::Interp4Set(): _name("obj"), _wsp_x(0), _wsp_y(0), _kat_OZ(0)
 {}
 
 
 /*!
- *
+ * \brief Wyświetla składnię polecenia set, kolejno: nzawa obiektu, wsp.
+ * x, wsp y, kąt obrotu.
  */
 void Interp4Set::PrintCmd() const
 {
-  /*
-   *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
-   */
   cout << GetCmdName() << " " << _name << " " << _wsp_x << " "
        << _wsp_y << " " << _kat_OZ << endl;
 }
 
 
 /*!
- *
+ * \brief Funkcja zwraca nazwę komendy
  */
 const char* Interp4Set::GetCmdName() const
 {
@@ -55,7 +53,7 @@ const char* Interp4Set::GetCmdName() const
 
 
 /*!
- *
+ * \brief Wykonanie polecenia
  */
 bool Interp4Set::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
 {
@@ -67,14 +65,15 @@ bool Interp4Set::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
 
 
 /*!
- *
+ * \brief Odczytanie zadanych parametrów z komendy(nazwa, wsp.x, wsp.y, 
+ * rotacja)
  */
 bool Interp4Set::ReadParams(std::istream& Strm_CmdsList)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
-  return true;
+  Strm_CmdsList >> _name >> _wsp_x >> _wsp_y >> _kat_OZ;
+
+  return (!Strm_CmdsList.fail());
+  
 }
 
 
