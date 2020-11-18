@@ -36,16 +36,21 @@ bool ExecProcessor( const char *NazwaPliku, istringstream &IStrm4Cmds ){
 bool ExecActions(istream &rIStrm, Interp4Command &rInterp){
   string CmdKey;
 
-  rIStrm >> CmdKey;
 
-  if(CmdKey == "Move" || CmdKey == "Set" || CmdKey == "Rotate"
-     || CmdKey == "Pause")
+
+  // rIStrm >> CmdKey;
+
+  while(rIStrm >> CmdKey)
   {
-    if(!rInterp.ReadParams(rIStrm)) return false;
+      if(CmdKey == "Move" || CmdKey == "Set" || CmdKey == "Rotate"
+	 || CmdKey == "Pause")
+	{
+	  if(!rInterp.ReadParams(rIStrm)) return false;
 
-    cout << "Parametry: " << endl;
-    rInterp.PrintCmd();
-  }
+	  cout << "--------------- Parametry ---------------" << endl;
+	  rInterp.PrintCmd();
+	  }
+   }
   
   return true;
 }
@@ -77,17 +82,18 @@ int main(int argc, char** argv)
 
   cout << endl << IStrm.str() << endl;
 
-  // Handlers
+  // Handlers, open libs
   void *pLibHnd_Move = dlopen("libInterp4Move.so",RTLD_LAZY);
   void *pLibHnd_Set = dlopen("libInterp4Set.so", RTLD_LAZY);
   void *pLibHnd_Pause = dlopen("libInterp4Pause.so", RTLD_LAZY);
   void *pLibHnd_Rotate = dlopen("libInterp4Rotate.so", RTLD_LAZY);
-  
-    
+
+  // Definicja fukncji i przydzielenie wskaznika
   Interp4Command *(*pCreateCmd_Move)(void);
   Interp4Command *(*pCreateCmd_Set)(void);
   Interp4Command *(*pCreateCmd_Pause)(void);
   Interp4Command *(*pCreateCmd_Rotate)(void);
+
   
   void *pFun;
   void *pFunS;
