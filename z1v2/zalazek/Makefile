@@ -25,6 +25,15 @@ LDFLAGS=-Wall
 interp: obj/main.o
 	g++ ${LDFLAGS} -o interp  obj/main.o -ldl
 
+obj/Scene.o: src/Scene.cpp inc/Scene.hh
+	g++ ${LDFLAGS} -o obj/Scene.o src/Scene.cpp
+
+obj/Set4LibInterfaces.o: src/Set4LibInterfaces.cpp inc/Set4LibInterfaces.hh
+	g++ ${LDFLAGS} -o obj/Set4LibInterfaces.o src/Set4LibInterfaces.cpp
+
+obj/LibInterface.o: src/LibInterface.cpp inc/LibInterface.hh
+	g++ ${LDFLAGS} -o obj/LibInterface.o src/LibInterface.cpp
+
 obj/main.o: src/main.cpp inc/Interp4Command.hh
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
 

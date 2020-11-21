@@ -64,9 +64,30 @@
         * Nazwa obiektu, która go indentyfikuje. Z tego względu musi
         * musi to być nazwa unikalna wśród wszystkich obiektów na scenie.
         */
-       std::string  _Name;
+       std::string  _Name = "Nameless object";
 
      public:
+      /*!
+       * \brief Konstrktor domyślny, informuje o utworzeniu obiektu
+       */
+      MobileObj(){
+	std::cout << std::endl << "Added object: " << this->_Name << std::endl;
+      }
+
+      /*!
+       * \brief Konstruktor inicjalizujący obiket i jego nazwę.
+       */
+      MobileObj(std::string t_name){
+	this->_Name = t_name;
+	std::cout << std::endl << "Added object: " << this->_Name << std::endl;
+      }
+
+      ~MobileObj(){
+	std::cout << "Deleted obj: " << this->_Name << std::endl;
+      }
+      
+      
+      
       /*!
        * \brief Udostępia wartość kąta \e roll.
        *

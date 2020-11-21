@@ -3,3 +3,4 @@
  *  Przykładowy zestaw poleceń
  */
   Set  Ob_B 10 90 100
+  Set  Ob_B 10 90 90
