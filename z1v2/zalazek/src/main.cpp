@@ -39,33 +39,19 @@ bool ExecProcessor( const char *NazwaPliku, istringstream &IStrm4Cmds ){
 
 bool ExecActions(istream &rIStrm, Interp4Command &rInterp){
 
-  string CmdKey;
-
-  while(rIStrm >> CmdKey)
-  {
-    if(CmdKey == "Move"){
-
-    }else if(CmdKey == "Set"){
-
-    }else if(CmdKey == "Rotate"){
-
-    }else if(CmdKey == "Pause"){
-
-    }else{
-      cout << "Blad w pliku polecen!";
-    }
+  //  string CmdKey;
       
 
-      if(CmdKey == "Move" || CmdKey == "Set" || CmdKey == "Rotate"
-	 || CmdKey == "Pause")
-	{
-	  if(!rInterp.ReadParams(rIStrm)) return false;
+  //if(CmdKey == "Move" || CmdKey == "Set" || CmdKey == "Rotate"
+  //   || CmdKey == "Pause")
+  //  {
+      if(!rInterp.ReadParams(rIStrm)) return false;
+      
+      cout << "--------------- Parametry ---------------" << endl;
+      rInterp.PrintCmd();
+      //  }
 
-	  cout << "--------------- Parametry ---------------" << endl;
-	  rInterp.PrintCmd();
-	}
-   }
-  
+
   return true;
 }
 
@@ -77,18 +63,6 @@ bool ExecActions(istream &rIStrm, Interp4Command &rInterp){
 
 int main(int argc, char** argv)
 {
-  // Utworzenie sceny na której umieszczone zostaną obiekty
-  Scene Scene1;
-
-  // Utworzenie obiketu i przypisanie wskaznika.
-  std::shared_ptr<MobileObj> obj1 = make_shared<MobileObj>();
-
-  // TODO: Scene1.addObj(obj1) -- Możliwość dodania obiektu do sceny
-
-  Scene1.AddMobileObj(obj1);
-  
-  
-  
   if(argc < 2){
     cerr << endl;
     cerr << "Za malo parametrow " << endl;
@@ -106,21 +80,67 @@ int main(int argc, char** argv)
   }
 
   // Wyswietlenie zawartosci pliku
+  cout << "Wewnątrz pliku: " << endl;
   cout << endl << IStrm.str() << endl;
 
+
+  // Utworzenie sceny na której umieszczone zostaną obiekty
+  Scene Scene1("Scene1");
+
+  // Utworzenie obiketu i dodanie do sceny
+  std::shared_ptr<MobileObj> obj1 = make_shared<MobileObj>();
+  Scene1.AddMobileObj(obj1);
+
+
+  // Przeszukiwanie pliku
+  string aux;
+  while(IStrm >> aux){
+    if(aux == "Set"){
+      void *pLibHnd_Set = dlopen("libInterp4Set.so", RTLD_LAZY);
+      Interp4Command *(*pCreateCmd_Set)(void);
+      void *pFunS;
+
+      if (!pLibHnd_Set) {
+	cerr << "!!! Brak biblioteki !!!" << endl;
+	return 1;
+      }
+
+      pFunS = dlsym(pLibHnd_Set,"CreateCmd");
+      if (!pFunS) {
+	cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
+	return 1;
+      }
+      pCreateCmd_Set = *reinterpret_cast<Interp4Command* (**)(void)>(&pFunS);
+      
+      Interp4Command *pInterp = pCreateCmd_Set();
+
+      if(!ExecActions(IStrm, *pInterp)){
+	cerr << "Something wrong" << endl;
+	return 3;
+      }
+
+    }
+      
+  }
+
+
+  return 0;  
+}
+  
+
+
+
+
+/*
+
   //----------//
 
+
+
+  
+  // Jeszcze starszy kod
   // Utworzenie uchwytow do wtyczek
-  LibInterface Plugins();
-
-  
-  
-
-
-  
-
-
-  //----------//
+  // LibInterface Plugins(); <-------- WAZNE, ale jesli dziala bez to ok
   
   //}
   // Stary kod 
@@ -174,3 +194,4 @@ int main(int argc, char** argv)
   }
 }
   
+*/
