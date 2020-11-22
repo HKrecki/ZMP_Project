@@ -37,7 +37,7 @@ Interp4Rotate::Interp4Rotate(): nazwa_obiektu("obj"), szybkosc_katowa(0), kat_ob
  */
 void Interp4Rotate::PrintCmd() const
 {
-  cout << GetCmdName() << " " << szybkosc_katowa << " " << kat_obrotu << endl;
+  cout << GetCmdName() << " "  << nazwa_obiektu  <<" " << szybkosc_katowa << " " << kat_obrotu << endl;
 }
 
 

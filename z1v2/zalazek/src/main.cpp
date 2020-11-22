@@ -39,18 +39,10 @@ bool ExecProcessor( const char *NazwaPliku, istringstream &IStrm4Cmds ){
 
 bool ExecActions(istream &rIStrm, Interp4Command &rInterp){
 
-  //  string CmdKey;
+  if(!rInterp.ReadParams(rIStrm)) return false;
       
-
-  //if(CmdKey == "Move" || CmdKey == "Set" || CmdKey == "Rotate"
-  //   || CmdKey == "Pause")
-  //  {
-      if(!rInterp.ReadParams(rIStrm)) return false;
-      
-      cout << "--------------- Parametry ---------------" << endl;
-      rInterp.PrintCmd();
-      //  }
-
+  cout << "--------------- Parametry ---------------" << endl;
+  rInterp.PrintCmd();
 
   return true;
 }
@@ -118,14 +110,86 @@ int main(int argc, char** argv)
 	cerr << "Something wrong" << endl;
 	return 3;
       }
+    }
+    else if(aux == "Move"){
+      void *pLibHnd_Move = dlopen("libInterp4Move.so", RTLD_LAZY);
+      Interp4Command *(*pCreateCmd_Move)(void);
+      void *pFunS;
 
+      if (!pLibHnd_Move) {
+	cerr << "!!! Brak biblioteki !!!" << endl;
+	return 1;
+      }
+
+      pFunS = dlsym(pLibHnd_Move,"CreateCmd");
+      if (!pFunS) {
+	cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
+	return 1;
+      }
+      pCreateCmd_Move = *reinterpret_cast<Interp4Command* (**)(void)>(&pFunS);
+      
+      Interp4Command *pInterp = pCreateCmd_Move();
+
+      if(!ExecActions(IStrm, *pInterp)){
+	cerr << "Something wrong" << endl;
+	return 3;
+      }
+    }
+    else if(aux == "Rotate"){
+      void *pLibHnd_Rotate = dlopen("libInterp4Rotate.so", RTLD_LAZY);
+      Interp4Command *(*pCreateCmd_Rotate)(void);
+      void *pFunS;
+
+      if (!pLibHnd_Rotate) {
+	cerr << "!!! Brak biblioteki !!!" << endl;
+	return 1;
+      }
+
+      pFunS = dlsym(pLibHnd_Rotate,"CreateCmd");
+      if (!pFunS) {
+	cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
+	return 1;
+      }
+      pCreateCmd_Rotate = *reinterpret_cast<Interp4Command* (**)(void)>(&pFunS);
+      
+      Interp4Command *pInterp = pCreateCmd_Rotate();
+
+      if(!ExecActions(IStrm, *pInterp)){
+	cerr << "Something wrong" << endl;
+	return 3;
+      }
+    }else if(aux == "Pause"){
+      void *pLibHnd_Pause = dlopen("libInterp4Pause.so", RTLD_LAZY);
+      Interp4Command *(*pCreateCmd_Pause)(void);
+      void *pFunS;
+
+      if (!pLibHnd_Pause) {
+	cerr << "!!! Brak biblioteki !!!" << endl;
+	return 1;
+      }
+
+      pFunS = dlsym(pLibHnd_Pause,"CreateCmd");
+      if (!pFunS) {
+	cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
+	return 1;
+      }
+      pCreateCmd_Pause = *reinterpret_cast<Interp4Command* (**)(void)>(&pFunS);
+      
+      Interp4Command *pInterp = pCreateCmd_Pause();
+
+      if(!ExecActions(IStrm, *pInterp)){
+	cerr << "Something wrong" << endl;
+	return 3;
+      }
     }
       
   }
 
 
   return 0;  
+  
 }
+  
   
 
 
