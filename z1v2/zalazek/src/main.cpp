@@ -80,10 +80,13 @@ int main(int argc, char** argv)
   // Utworzenie sceny na której umieszczone zostaną obiekty
   Scene Scene1;
 
-  // Utworzenie wskaznikow na utworzone obiekty:
+  // Utworzenie obiketu i przypisanie wskaznika.
   std::shared_ptr<MobileObj> obj1 = make_shared<MobileObj>();
 
   // TODO: Scene1.addObj(obj1) -- Możliwość dodania obiektu do sceny
+
+  Scene1.AddMobileObj(obj1);
+  
   
   
   if(argc < 2){
