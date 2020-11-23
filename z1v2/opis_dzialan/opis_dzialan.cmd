@@ -2,9 +2,10 @@
 /*
  *  Przykładowy zestaw poleceń
  */
-  Set  Ob_B 10 90 100
-  Set  Ob_B 10 90 90
-  Move Ob_B 10 10
-  Pause 5
-  Rotate Ob_B
-  10					10
+ Move Ob_A 10 10
+ Set  Ob_A 10 90 100
+ Rotate Ob_A 20 20
+ Pause
+
+5
+  
