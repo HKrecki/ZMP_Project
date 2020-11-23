@@ -26,7 +26,7 @@ Interp4Command* CreateCmd(void)
 
 
 /*!
- * \brief Konstruktor domyślny
+ * \brief Konstruktor domyślny, inicjalizuje parametry
  */
 Interp4Rotate::Interp4Rotate(): nazwa_obiektu("obj"), szybkosc_katowa(0), kat_obrotu(0)
 {}

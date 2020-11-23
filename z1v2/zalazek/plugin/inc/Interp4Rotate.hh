@@ -10,15 +10,17 @@
 
 /*!
  * \file
- * \brief Definicja klasy Interp4Move
+ * \brief Definicja klasy Interp4Rotate
  *
- * Plik zawiera definicję klasy Interp4Move ...
+ * Plik zawiera definicję klasy Interp4Rotate, która modeluje możliość rotacji
+ * obiektu.
  */
 
 /*!
- * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego ruch do przodu
+ * \brief Modeluje polecenie dla robota mobilnego, które wymusza jego
+ * obrót o dowolny kąt.
  *
- *  Klasa modeluje ...
+ *  Klasa modeluje możliwość zadania dowolnej rotacji obiektu.
  */
 class Interp4Rotate: public Interp4Command {
   /*!

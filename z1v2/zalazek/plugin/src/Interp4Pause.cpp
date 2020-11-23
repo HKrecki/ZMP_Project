@@ -15,7 +15,7 @@ extern "C" {
 
 
 /*!
- * \brief
+ * \brief Utwirzenie polecenia
  *
  *
  */
@@ -26,14 +26,14 @@ Interp4Command* CreateCmd(void)
 
 
 /*!
- * \brief Konstruktor domyślny
+ * \brief Konstruktor domyślny, inicjalizujący parametry
  */
 Interp4Pause::Interp4Pause(): _Czas_pauzy_ms(0)
 {}
 
 
 /*!
- * \brief Wyświetla składnię polecenia Pause, w tym czas zatrzymania symulacji
+ * \brief Wyświetla polecenie i czas pauzy
  */
 void Interp4Pause::PrintCmd() const
 {
@@ -73,8 +73,6 @@ bool Interp4Pause::ReadParams(std::istream& Strm_CmdsList)
   Strm_CmdsList >> _Czas_pauzy_ms;
   
   return (!Strm_CmdsList.fail());
-
-  
 }
 
 

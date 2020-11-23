@@ -66,7 +66,6 @@ bool ExecActions(istream &rIStrm, Set4LibInterfaces t_plugins){
   if (t_plugins.Find(aux.c_str(), auxInterface)){
     cout << endl;
     cout << "Found command: " << aux.c_str() << endl;
-    //if(aux.c_str() == "Set")
     libName = "libInterp4" + aux + ".so";
     
     pLibHnd = dlopen(libName.c_str(), RTLD_LAZY);    
@@ -85,6 +84,7 @@ bool ExecActions(istream &rIStrm, Set4LibInterfaces t_plugins){
   pCmd->PrintCmd();
   cout << endl;
 
+  
   delete pCmd;
   dlclose(pLibHnd);
   
@@ -144,15 +144,15 @@ int main(int argc, char** argv)
   PluginInterfaces.Add(Interface4Pause);
   //----------
   // Przeszukanie mapy pluginow po nazwie, zalozenie ze slowo klucz to set
-  while(ExecActions(IStrm, PluginInterfaces));
+  while(ExecActions(IStrm, PluginInterfaces) == true){}
 
   return 0;
 }
   
 
-  //***************************************************************************
+  /////////////////////////////////////////////////////////////////////////////
   // DZIAŁA
-  //***************************************************************************
+  /////////////////////////////////////////////////////////////////////////////
   // Przeszukiwanie pliku
   /*
     
@@ -261,9 +261,9 @@ int main(int argc, char** argv)
       
   }
 }
-  //***************************************************************************
+  /////////////////////////////////////////////////////////////////////////////
   // DZIAŁA
-  //***************************************************************************
+  /////////////////////////////////////////////////////////////////////////////
   
   */
 

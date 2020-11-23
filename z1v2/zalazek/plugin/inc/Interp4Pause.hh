@@ -20,6 +20,9 @@
  *
  */
 class Interp4Pause: public Interp4Command {
+  /*!
+   * \brief Określa czas trwania pauzy
+   */
   double  _Czas_pauzy_ms;
  public:
   /*!
@@ -27,7 +30,7 @@ class Interp4Pause: public Interp4Command {
    */
   Interp4Pause();  
   /*!
-   * \brief Wyświetla postać bieżącego polecenia (nazwę oraz wartości parametrów)
+   * \brief Wyświetla postać bieżącego polecenia (nazwę oraz wartość parametru)
    */
   virtual void PrintCmd() const;
   /*!

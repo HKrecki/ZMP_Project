@@ -18,9 +18,12 @@
 
 
 
+
+
    /*!
-    * Nazwy pól klasy są jedynie propozycją i mogą być zmienione
-    * Nazwy metod są obowiązujące.
+    * \brief Klasa modeluje obiekt modilny
+    * 
+    * Modeluje obiekt modilny 
     */
     class MobileObj {
        /*!
@@ -64,7 +67,7 @@
         * Nazwa obiektu, która go indentyfikuje. Z tego względu musi
         * musi to być nazwa unikalna wśród wszystkich obiektów na scenie.
         */
-       std::string  _Name = "Nameless object";
+       std::string  _Name = "obj";
 
      public:
       /*!
@@ -76,12 +79,17 @@
 
       /*!
        * \brief Konstruktor inicjalizujący obiket i jego nazwę.
+       * \param Nazwa obiektu
        */
       MobileObj(std::string t_name){
 	this->_Name = t_name;
 	std::cout << std::endl << "Added object: " << this->_Name << std::endl;
       }
 
+      /*!
+       * \brief Destruktor
+       * Destruktor wraz z wyświetleniem komunikatu o wywołaniu
+       */
       ~MobileObj(){
 	std::cout << "Deleted obj: " << this->_Name << std::endl;
       }

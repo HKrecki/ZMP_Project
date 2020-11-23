@@ -26,7 +26,7 @@ Interp4Command* CreateCmd(void)
 
 
 /*!
- * \brief Konstruktor domyślny
+ * \brief Konstruktor domyślny, inicjalizuje paramrty
  */
 Interp4Set::Interp4Set(): _name("obj"), _wsp_x(0), _wsp_y(0), _kat_OZ(0)
 {}

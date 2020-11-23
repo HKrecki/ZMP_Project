@@ -8,13 +8,13 @@
  * \file
  * \brief Definicja klasy Interp4Command
  *
- * Plik zawiera definicję klasy Interp4Command ...
+ * Plik zawiera definicję klasy Interp4Command
  */
 
 /*!
  * \brief Modeluje abstrakcyjne polecenie dla robota mobilnego
  *
- *  Klasa modeluje ...
+ *  Klasa modeluje polecenie dla obiektu
  */
  class Interp4Command {
   public:

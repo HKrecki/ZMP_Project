@@ -6,6 +6,18 @@
 #include <cassert>
 
 #include "Interp4Command.hh"
+/*!
+ * \file
+ * \brief Definicja klasy LibInterface
+ *
+ * Plik zawiera definicję klasy LibInterface
+ */
+
+/*!
+ * \brief Modeluje interfejs dla bibliotekki
+ *
+ *  Klasa modeluje interfaejs dla biblioteki
+ */
 
 class LibInterface{
   /*! 
@@ -26,14 +38,28 @@ class LibInterface{
   
 public:
 
+  /*!
+   * \brief Umożliwia odczytanie parametrów i zapis paramertów polecenia
+   * \param Strumień wejścia, czytanie z pliku
+   */
   bool ReadParams(std::istream &IStrm){
     return _pCreateCmd()->ReadParams(IStrm);}
-  
+
+
+  /*!
+   * \brief Wyświetlenie polecenia i parametrów
+   */
   void PrintCmd(){
     _pCreateCmd()->PrintCmd();}
   
   
   // TODO: Konstruktor który tworzy biblioteki i sprawdzi poprawność komend.
+  /*!
+   * \brief Konstruktor klasy dziękipodanej nazwie, konstruktor sprawdza czy
+   * biblioteka istnieje, jeśli tak, to przypisuje ją do uchwytu.
+   * Przez dany uchwyt zostaje utworzone polecenie i przypisanie nazwy komendy.
+   * \param Nazwa biblioteki
+   */
   LibInterface(const std::string t_libName){
     void *pFun;
     
@@ -54,7 +80,7 @@ public:
 
   
   /*!
-   * \brief Przypisanie nazwy polecenia do interfejsu
+   * \brief Zwraca nazwę polecenia
    */
   const std::string GetCmdName(){
     return _CmdName;
