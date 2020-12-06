@@ -33,7 +33,7 @@ typedef std::map<std::string, std::shared_ptr<LibInterface>> PluginsIFSets;
 class Set4LibInterfaces{
 
   /*!
-   * \brief  Mapa interfejsów do wtyczek
+   * \brief  Mapa/kolekcja interfejsów do wtyczek
    */
   PluginsIFSets _pluginIFSets; // Mapa interfejsów do pluginów, patrz mobObj
 public:
@@ -42,7 +42,7 @@ public:
 
   /*!
    * \brief Metoda umożliwia dodanie interfejsu do mapy/zestawu interfejsów
-   * \param Dodawana biblioteka klasy LibInterface(wskażnik)
+   * \param[in] pLibInterface Dodawana biblioteka klasy LibInterface(wskażnik)
    */
   void Add(shared_ptr<LibInterface> &pLibInterface){
     _pluginIFSets.insert(std::pair<string, shared_ptr<LibInterface>>(pLibInterface->GetCmdName(), pLibInterface));
@@ -50,8 +50,8 @@ public:
 
   /*!
    * \brief Metoda umożliwia odnalezienie danego interfejsu w mapie.
-   * \param Nazwa biblioteki
-   * \param Szukana biblioteka klasy LibInterface(wskażnik)
+   * \param[in] t_libName Nazwa biblioteki
+   * \param[in] t_libIF biblioteka klasy LibInterface(wskażnik)
    */
   bool Find(string t_libName, shared_ptr<LibInterface> &t_libIF){
     //    PluginsIFSets It = PluginsIFSets.find(t_libName);

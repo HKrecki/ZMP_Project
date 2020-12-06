@@ -79,7 +79,7 @@
 
       /*!
        * \brief Konstruktor inicjalizujący obiket i jego nazwę.
-       * \param Nazwa obiektu
+       * \param[in] t_name  Nazwa obiektu
        */
       MobileObj(std::string t_name){
 	this->_Name = t_name;

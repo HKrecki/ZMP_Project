@@ -40,7 +40,7 @@ public:
 
   /*!
    * \brief Umożliwia odczytanie parametrów i zapis paramertów polecenia
-   * \param Strumień wejścia, czytanie z pliku
+   * \param[in] IStrm  Strumień wejścia, czytanie z pliku
    */
   bool ReadParams(std::istream &IStrm){
     return _pCreateCmd()->ReadParams(IStrm);}
@@ -58,7 +58,7 @@ public:
    * \brief Konstruktor klasy dziękipodanej nazwie, konstruktor sprawdza czy
    * biblioteka istnieje, jeśli tak, to przypisuje ją do uchwytu.
    * Przez dany uchwyt zostaje utworzone polecenie i przypisanie nazwy komendy.
-   * \param Nazwa biblioteki
+   * \param[in] t_libName  Nazwa biblioteki
    */
   LibInterface(const std::string t_libName){
     void *pFun;

@@ -60,13 +60,13 @@ public:
   
   /*!
    * \brief Zwraca metode na obiekt modyfikowalny
-   * \param Nazwa szukanego obiektu
+   * \param[in] sName  Nazwa szukanego obiektu
    */
   MobileObj* FindMobileObj(const char *sName);
 
   /*!
    * \brief Metoda umożliwiająca dodanie obiektu do mapy i sceny. 
-   * \param Dodawany obiek klasy MobileObj
+   * \param[in] pMobObj  Dodawany obiek klasy MobileObj
    */
   void AddMobileObj(shared_ptr<MobileObj> &pMobObj){
     _Set_MobileObjs.insert(std::pair<string, shared_ptr<MobileObj>>(pMobObj->GetName(), pMobObj));

@@ -62,10 +62,17 @@ bool ExecActions(istream &rIStrm, Set4LibInterfaces t_plugins){
   string libName;
 
   rIStrm >> aux;
-  
+
+  // Znalezienie biblioteki w mapie
   if (t_plugins.Find(aux.c_str(), auxInterface)){
+    // TODO: Uchwyt na podstawie polecenia
+
+
     cout << endl;
+    // Jeśli znaleziono daną komendę
     cout << "Found command: " << aux.c_str() << endl;
+
+    // Przygotowanie nazwy biblioteki na podstawie komendy
     libName = "libInterp4" + aux + ".so";
     
     pLibHnd = dlopen(libName.c_str(), RTLD_LAZY);    
