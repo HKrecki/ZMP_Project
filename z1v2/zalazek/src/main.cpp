@@ -1,18 +1,25 @@
+#include <xercesc/sax2/SAX2XMLReader.hpp>
+#include <xercesc/sax2/XMLReaderFactory.hpp>
+#include <xercesc/sax2/DefaultHandler.hpp>
+#include <xercesc/util/XMLString.hpp>
 #include <iostream>
 #include <dlfcn.h>
 #include <cassert>
 #include <sstream>
 #include <cstdio>
 #include <memory>
+#include <list>
 #include "Interp4Command.hh"
 #include "Set4LibInterfaces.hh"
 #include "Scene.hh"
 #include "MobileObj.hh"
+#include "xmlinterp.hh"
 
 
 #define LINE_SIZE 500
 
 using namespace std;
+using namespace xercesc;
 
 /************************************************************************/
 
@@ -114,6 +121,22 @@ int main(int argc, char** argv)
 
   istringstream IStrm;
 
+  // TUTAJ TESTY CZYTANIA XML //
+  cout << "----- Testy czytania xml -----" << endl;
+  
+
+
+
+
+  cout << "----- Testy czytania xml -----" << endl;
+  
+  return 0;
+}
+  // TUTAJ TESTY CZYTANIA XML //
+
+
+  
+  /* 
   if(!ExecProcessor(argv[1],IStrm)){
     cerr << endl;
     cerr << "Blad" << endl;
@@ -155,7 +178,8 @@ int main(int argc, char** argv)
 
   return 0;
 }
-  
+  */
+  // DO TEGO MOMENTU DZIALALO
 
   /////////////////////////////////////////////////////////////////////////////
   // DZIAŁA
