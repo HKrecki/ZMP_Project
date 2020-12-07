@@ -33,6 +33,8 @@ class Scene{
   
 public:
 
+  
+
   /*!
    * \brief Domyślny konstruktor sceny
    */
@@ -45,6 +47,7 @@ public:
   Scene(string t_name){
     _Name = t_name;
   }
+  
 
   /*!
    * \brief Zwraca nazwę sceny
