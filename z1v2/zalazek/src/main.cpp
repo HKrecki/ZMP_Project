@@ -26,6 +26,7 @@
 #include "xmlinterp.hh"
 #include "Port.hh"
 #include "AccessControl.hh"
+#include "Sender.hh"
 
 
 #define LINE_SIZE 500
@@ -69,6 +70,31 @@ bool ExecActions(istream &rIStrm, Set4LibInterfaces t_plugins);
 
 
 /************************************************************************/
+// Funkcje obslugi serwera
+void Fun_CommunicationThread(Sender  *pSender)
+{
+  pSender->Watching_and_Sending();
+}
+
+// Wykoanie polecenia
+bool ExecCmd(GeomObject *pObj, AccessControl  *pAccCtrl)
+{
+  bool Changed;
+
+  while (true) {
+    pAccCtrl->LockAccess(); // Zamykamy dostęp do sceny, gdy wykonujemy
+                           // modyfikacje na obiekcie.
+    if (!(Changed = pObj->IncStateIndex())) { pAccCtrl->UnlockAccess();  break; }
+    pAccCtrl->MarkChange();
+    pAccCtrl->UnlockAccess();
+    usleep(300000);
+  }
+  return true;
+}
+
+
+
+
 
 
 
@@ -109,10 +135,10 @@ int main(int argc, char** argv)
   cout << endl << IStrm.str() << endl;
 
    // Utworzenie sceny na której umieszczone zostaną obiekty
-  Scene Scene1("Scene1");
+  Scene Scene1;
   // Utworzenie obiketu i dodanie do sceny
   std::shared_ptr<MobileObj> obj1 = make_shared<MobileObj>();
-  Scene1.AddMobileObj(obj1);
+  //Scene1.AddMobileObj(obj1);
   
   // Dodanie bibliotek
   Set4LibInterfaces PluginInterfaces;
@@ -144,13 +170,30 @@ int main(int argc, char** argv)
   if (!OpenConnection(Socket4Sending)) return 4;
 
   // Utworzenie obiektu Sender
+  Sender ClientSender(Socket4Sending, &Scene1);
+
   
+  // Utworzenie watku do polaczenia z serwerem
+  thread   Thread4Sending(Fun_CommunicationThread,&ClientSender);
+
   
-  
+  for (GeomObject &rObj : Scene1._Container4Objects) {
+    cout << "Wykonano petle" << endl;
+    usleep(20000);
+    ExecCmd(&rObj,&Scene1);
+    Scene1.MarkChange();
+    usleep(100000);
+  }
+  usleep(100000);
   
   
 
-
+  // Zamkniecie watku i polaczenia, bez tego jest seg. fault
+  cout << "Close\n" << endl; // To tylko, aby pokazac wysylana instrukcje
+  Send(Socket4Sending,"Close\n");
+  ClientSender.CancelCountinueLooping();
+  Thread4Sending.join();
+  close(Socket4Sending);
   
   return 0;
 }
