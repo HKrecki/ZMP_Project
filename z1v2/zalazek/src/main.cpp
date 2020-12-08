@@ -65,6 +65,97 @@ bool ExecActions_v1(istream &rIStrm, Interp4Command &rInterp){
 
 /************************************************************************/
 
+bool ExecActions(istream &rIStrm, Set4LibInterfaces t_plugins);
+
+
+/************************************************************************/
+
+
+
+int main(int argc, char** argv)
+{ 
+  // Sprawdzenie czy nie za malo argumentow
+  if(argc < 2){
+    cerr << endl;
+    cerr << "Za malo parametrow " << endl;
+    cerr << endl;
+    return 1;
+  }
+
+  istringstream IStrm;
+  
+  if(!ExecProcessor(argv[1],IStrm)){
+    cerr << endl;
+    cerr << "Blad" << endl;
+    cerr << endl;
+    return 2;
+  }
+  
+  
+  // TUTAJ TESTY CZYTANIA XML //
+  cout << "----- Odczyt XML START -----" << endl;
+  Configuration Config;
+
+  // Czytanie pliku XML
+  if (!ReadFile_XML("config/config.xml",Config)) return 3;
+
+  cout << "----- Odczyt XML KONIEC -----" << endl;
+  cout << "------------------------------" << endl;
+  cout << "----- Odczyt paametrow START -----" << endl;
+  /////////////////////////////////////////////////////////////////////////////
+
+  
+  cout << "Wewnątrz pliku: " << endl;
+  cout << endl << IStrm.str() << endl;
+
+   // Utworzenie sceny na której umieszczone zostaną obiekty
+  Scene Scene1("Scene1");
+  // Utworzenie obiketu i dodanie do sceny
+  std::shared_ptr<MobileObj> obj1 = make_shared<MobileObj>();
+  Scene1.AddMobileObj(obj1);
+  
+  // Dodanie bibliotek
+  Set4LibInterfaces PluginInterfaces;
+  // Dodanie pluginow do mapy
+  //----------
+  // Ta czesc jest niepotrzebna, dopoki nie bedzie przeszukiwania mapy w execActions
+  shared_ptr<LibInterface> Interface4Move = make_shared<LibInterface>("libInterp4Move.so");
+  shared_ptr<LibInterface> Interface4Set = make_shared<LibInterface>("libInterp4Set.so");
+  shared_ptr<LibInterface> Interface4Rotate = make_shared<LibInterface>("libInterp4Rotate.so");
+  shared_ptr<LibInterface> Interface4Pause = make_shared<LibInterface>("libInterp4Pause.so");
+
+  PluginInterfaces.Add(Interface4Move);
+  PluginInterfaces.Add(Interface4Set);
+  PluginInterfaces.Add(Interface4Rotate);
+  PluginInterfaces.Add(Interface4Pause);
+  //----------
+  
+  // Przeszukanie mapy pluginow po nazwie, zalozenie ze slowo klucz to set
+  while(ExecActions(IStrm, PluginInterfaces) == true){}
+  
+  cout << "----- Odczyt paametrow KONIEC -----" << endl << endl;
+  cout << "Polaczenie z serwerem " << endl;
+  
+  //----- Polaczenie z serwerem -----//
+  cout << "Port: " << PORT << endl;
+  
+  int Socket4Sending;
+  
+  if (!OpenConnection(Socket4Sending)) return 4;
+
+  // Utworzenie obiektu Sender
+  
+  
+  
+  
+  
+
+
+  
+  return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 bool ExecActions(istream &rIStrm, Set4LibInterfaces t_plugins){
 
   // TODO1: Otwarcie bibliotek poza funkcją, w main
@@ -116,91 +207,7 @@ bool ExecActions(istream &rIStrm, Set4LibInterfaces t_plugins){
 }
 
 
-/************************************************************************/
 
-
-
-int main(int argc, char** argv)
-{ 
-  // Sprawdzenie czy nie za malo argumentow
-  if(argc < 2){
-    cerr << endl;
-    cerr << "Za malo parametrow " << endl;
-    cerr << endl;
-    return 1;
-  }
-
-  istringstream IStrm;
-  
-  if(!ExecProcessor(argv[1],IStrm)){
-    cerr << endl;
-    cerr << "Blad" << endl;
-    cerr << endl;
-    return 2;
-  }
-  
-  
-  // TUTAJ TESTY CZYTANIA XML //
-  cout << "----- Odczyt XML START -----" << endl;
-  Configuration Config;
-
-  // Czytanie pliku XML
-  if (!ReadFile_XML("config/config.xml",Config)) return 1;
-
-  cout << "----- Odczyt XML KONIEC -----" << endl;
-  cout << "------------------------------" << endl;
-  cout << "----- Odczyt paametrow START -----" << endl;
-  /////////////////////////////////////////////////////////////////////////////
-
-  
-  cout << "Wewnątrz pliku: " << endl;
-  cout << endl << IStrm.str() << endl;
-
-   // Utworzenie sceny na której umieszczone zostaną obiekty
-  Scene Scene1("Scene1");
-  // Utworzenie obiketu i dodanie do sceny
-  std::shared_ptr<MobileObj> obj1 = make_shared<MobileObj>();
-  Scene1.AddMobileObj(obj1);
-  
-  // Dodanie bibliotek
-  Set4LibInterfaces PluginInterfaces;
-  // Dodanie pluginow do mapy
-  //----------
-  // Ta czesc jest niepotrzebna, dopoki nie bedzie przeszukiwania mapy w execActions
-  shared_ptr<LibInterface> Interface4Move = make_shared<LibInterface>("libInterp4Move.so");
-  shared_ptr<LibInterface> Interface4Set = make_shared<LibInterface>("libInterp4Set.so");
-  shared_ptr<LibInterface> Interface4Rotate = make_shared<LibInterface>("libInterp4Rotate.so");
-  shared_ptr<LibInterface> Interface4Pause = make_shared<LibInterface>("libInterp4Pause.so");
-
-  PluginInterfaces.Add(Interface4Move);
-  PluginInterfaces.Add(Interface4Set);
-  PluginInterfaces.Add(Interface4Rotate);
-  PluginInterfaces.Add(Interface4Pause);
-  //----------
-  
-  // Przeszukanie mapy pluginow po nazwie, zalozenie ze slowo klucz to set
-  while(ExecActions(IStrm, PluginInterfaces) == true){}
-  
-  cout << "----- Odczyt paametrow KONIEC -----" << endl << endl;
-  cout << "Polaczenie z serwerem " << endl;
-  
-  //----- Polaczenie z serwerem -----//
-  cout << "Port: " << PORT << endl;
-  
-  int Socket4Sending;
-  
-  if (!OpenConnection(Socket4Sending)) return 1;
-  // TODO: Dodac senedera, ktory bedzie nasluchiwal, dac mu osobna klase.
-  // Dodac klase ServerScene zamiast Scene z folderu klient.
-  
-  
-
-
-  
-  return 0;
-}
-
-///////////////////////////////////////////////////////////////////////////////
 
 
 
